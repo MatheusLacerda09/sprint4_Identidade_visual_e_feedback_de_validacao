@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Evento;
+use Illuminate\Http\Request;
+
+class EventoController extends Controller
+{
+    public function index()
+    {
+        $eventos = Evento::orderBy('created_at', 'desc')->paginate(10);
+        return view('eventos.index', compact('eventos'));
+    }
+
+    public function show(Evento $evento)
+    {
+        $perguntas = $evento->perguntas()
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('eventos.show', compact('evento', 'perguntas'));
+    }
+}
