@@ -12,12 +12,12 @@ class EventoController extends Controller
         $eventos = Evento::orderBy('created_at', 'desc')->paginate(10);
         return view('eventos.index', compact('eventos'));
     }
-
     public function show(Evento $evento)
     {
         $perguntas = $evento->perguntas()
+            ->where('is_public', true)
             ->with('user')
-            ->orderBy('created_at', 'desc')
+            ->latest()
             ->paginate(10);
 
         return view('eventos.show', compact('evento', 'perguntas'));

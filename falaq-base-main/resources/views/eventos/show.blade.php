@@ -17,32 +17,28 @@
         <form action="{{ route('perguntas.store', $evento) }}" method="POST" class="bg-white p-4 rounded-lg shadow border border-gray-200">
             @csrf
             <div class="mb-3">
-                <textarea name="conteudo" rows="3" class="w-full border-gray-300 rounded-md shadow-sm p-2 border" placeholder="Escreva sua pergunta para o palestrante..."></textarea>
+                <textarea 
+                    name="conteudo" 
+                    rows="3" 
+                    class="w-full rounded-md shadow-sm p-2 border focus:outline-none focus:ring-2 focus:ring-blue-500 @error('conteudo') border-red-500 @else border-gray-300 @enderror" 
+                    placeholder="Escreva sua pergunta para o palestrante..."
+                >{{ old('conteudo') }}</textarea>
+                
                 @error('conteudo')
-                    <span class="text-red-500 text-sm">{{ $message }}</span>
+                    <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
                 @enderror
             </div>
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Enviar Pergunta</button>
+            
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-150">
+                Enviar Pergunta
+            </button>
         </form>
     </div>
 
     <div>
         <h2 class="text-xl font-bold text-gray-800 mb-4">Perguntas da Plateia</h2>
-        @forelse($perguntas as $pergunta)
-            <div class="bg-white p-4 rounded-lg shadow mb-3 border border-gray-100">
+        @forelse($perguntas as$pergunta)
+            <div class="bg-white p-4 rounded-lg shadow mb-4 border border-gray-100">
                 <p class="text-gray-800 text-lg mb-2">{{ $pergunta->conteudo }}</p>
                 <div class="flex justify-between items-center text-sm text-gray-500">
-                    <span>Enviada por: <strong>{{ $pergunta->user->name ?? 'Anônimo' }}</strong></span>
-                    <span>{{ $pergunta->created_at->diffForHumans() }}</span>
-                </div>
-            </div>
-        @empty
-            <p class="text-gray-500 italic">Nenhuma pergunta enviada ainda. Seja o primeiro!</p>
-        @endforelse
-
-        <div class="mt-4">
-            {{ $perguntas->links() }}
-        </div>
-    </div>
-</div>
-@endsection
+                    <span>En
