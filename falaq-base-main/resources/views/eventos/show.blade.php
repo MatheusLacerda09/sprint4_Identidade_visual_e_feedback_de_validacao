@@ -20,16 +20,18 @@
                 <textarea 
                     name="conteudo" 
                     rows="3" 
-                    class="w-full rounded-md shadow-sm p-2 border focus:outline-none focus:ring-2 focus:ring-blue-500 @error('conteudo') border-red-500 @else border-gray-300 @enderror" 
+                    class="w-full rounded-md shadow-sm p-3 border focus:outline-none focus:ring-2 focus:ring-blue-500 @error('conteudo') border-red-500 @else border-gray-300 @enderror" 
                     placeholder="Escreva sua pergunta para o palestrante..."
                 >{{ old('conteudo') }}</textarea>
                 
+                {{-- Exibição condicional de erro --}}
                 @error('conteudo')
-                    <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    <span class="text-red-500 text-sm mt-1 block font-medium">{{ $message }}</span>
                 @enderror
             </div>
             
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-150">
+            {{-- Botão estilizado com Tailwind --}}
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition duration-150 font-medium">
                 Enviar Pergunta
             </button>
         </form>
@@ -37,8 +39,20 @@
 
     <div>
         <h2 class="text-xl font-bold text-gray-800 mb-4">Perguntas da Plateia</h2>
-        @forelse($perguntas as$pergunta)
-            <div class="bg-white p-4 rounded-lg shadow mb-4 border border-gray-100">
-                <p class="text-gray-800 text-lg mb-2">{{ $pergunta->conteudo }}</p>
-                <div class="flex justify-between items-center text-sm text-gray-500">
-                    <span>En
+        
+        @forelse($evento->perguntas ?? $perguntas as $pergunta)
+            <div class="bg-white p-4 rounded-lg shadow mb-4 border border-gray-200 transition-all hover:shadow-md">
+                <p class="text-gray-800 text-base mb-2 font-normal">{{ $pergunta->conteudo }}</p>
+                <div class="flex justify-between items-center text-xs text-gray-500 border-t pt-2 mt-2">
+                    <span>Enviada por {{ $pergunta->user->name ?? 'Anônimo' }}</span>
+                    <span>{{ $pergunta->created_at ? $pergunta->created_at->diffForHumans() : '' }}</span>
+                </div>
+            </div>
+        @empty
+            <div class="bg-gray-50 p-6 rounded-lg text-center text-gray-500 border border-dashed border-gray-300">
+                Nenhuma pergunta foi enviada ainda. Seja o primeiro a perguntar!
+            </div>
+        @endforelse
+    </div>
+</div>
+@endsection
