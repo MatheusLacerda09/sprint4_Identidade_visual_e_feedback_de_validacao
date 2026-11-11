@@ -18,6 +18,7 @@ class EventoController extends Controller
 
     public function show($id)
     {
+<<<<<<< HEAD
         $evento = Evento::findOrFail($id);
 
         // TICKET #002/#004/#006: filtra pelo evento, só perguntas aprovadas
@@ -28,6 +29,11 @@ class EventoController extends Controller
             ->with('user')
             ->latest()
             ->paginate(10);
+=======
+        $evento = Evento::find($id);
+
+        $perguntas = Pergunta::all();
+>>>>>>> cf28424dc35bb2b55f79ba90174c93dd151872c3
 
         return view('eventos.show', compact('evento', 'perguntas'));
     }
@@ -42,11 +48,18 @@ class EventoController extends Controller
             'user_id' => Auth::user()->id,
             'texto'     => $request->input('texto'),
             'status'    => 'pendente',
+<<<<<<< HEAD
             'is_public' => false, // aguarda moderação
         ]);
 
         return redirect()->route('eventos.show', $evento->id)
             ->with('sucesso', 'Sua pergunta foi enviada e aparecerá no mural após a aprovação do organizador.');
+=======
+        ]);
+
+        return redirect()->route('eventos.show', $evento->id)
+            ->with('sucesso', 'Sua pergunta foi enviada com sucesso!');
+>>>>>>> cf28424dc35bb2b55f79ba90174c93dd151872c3
     }
 
     public function create(){

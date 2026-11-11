@@ -35,7 +35,10 @@ class PerguntaSeeder extends Seeder
                 'evento_id'  => 1,
                 'texto'      => "Pergunta de teste #{$i}: Como a arquitetura lida com alta demanda de acessos simultâneos?",
                 'status'     => 'pendente',
+<<<<<<< HEAD
                 'is_public'  => true,
+=======
+>>>>>>> cf28424dc35bb2b55f79ba90174c93dd151872c3
                 'created_at' => $agora->copy()->subSeconds(5000 - $i),
                 'updated_at' => $agora->copy()->subSeconds(5000 - $i),
             ];

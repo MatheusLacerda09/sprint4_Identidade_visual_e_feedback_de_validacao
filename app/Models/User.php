@@ -53,8 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(Evento::class);
     }
 
+<<<<<<< HEAD
     public function perguntas(): HasMany
     {
         return $this->hasMany(Pergunta::class);
     }
+=======
+>>>>>>> cf28424dc35bb2b55f79ba90174c93dd151872c3
 }
